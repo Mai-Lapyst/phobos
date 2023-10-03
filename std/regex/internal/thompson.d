@@ -13,6 +13,8 @@ package(std.regex):
 import std.range.primitives;
 import std.regex.internal.ir;
 
+debug (std_regex_matcher) import std.stdio; // write, writeln, writef, writefln
+
 //State of VM thread
 struct Thread(DataIndex)
 {

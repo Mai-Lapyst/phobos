@@ -9,6 +9,9 @@ package(std.regex):
 import core.stdc.stdlib, std.range.primitives, std.traits, std.typecons;
 import std.regex.internal.ir;
 
+debug (std_regex_ctr) import std.stdio; // writeln
+debug (std_regex_matcher) import std.stdio; // writeln, writefln
+
 import core.memory : pureMalloc, pureFree;
 
 /+
@@ -1450,6 +1453,8 @@ struct CtContext
             break;
         case IR.Nop:
         case IR.End:
+            code ~= ctSub( `
+                    $$`, nextInstr);
             break;
         default:
             assert(0, text(ir[0].mnemonic, " is not supported yet"));

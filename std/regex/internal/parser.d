@@ -257,7 +257,10 @@ struct CodeGen
                 auto t  = getMatcher(set);
                 put(Bytecode(IR.Trie, cast(uint) matchers.length));
                 matchers ~= t;
-                debug(std_regex_allocation) writeln("Trie generated");
+                debug(std_regex_allocation) {
+                    import std.stdio : writeln;
+                    writeln("Trie generated");
+                }
             }
             else
             {
@@ -633,8 +636,10 @@ if (isForwardRange!R && is(ElementType!R : dchar))
 
         while (!empty)
         {
-            debug(std_regex_parser)
-                __ctfe || writeln("*LR*\nSource: ", pat, "\nStack: ",fixupStack.data);
+            debug(std_regex_parser) {
+                import std.stdio : writeln;
+                __ctfe || writeln("*LR*\nSource: ", pat, "\nStack: ",g.fixupStack.data);
+            }
             switch (front)
             {
             case '(':
@@ -1094,7 +1099,10 @@ if (isForwardRange!R && is(ElementType!R : dchar))
         checkIfOneShot();
         if (!(flags & RegexInfo.oneShot))
             kickstart = Kickstart!Char(zis, new uint[](256));
-        debug(std_regex_allocation) writefln("IR processed, max threads: %d", threadCount);
+        debug(std_regex_allocation) {
+            import std.stdio : writefln;
+            writefln("IR processed, max threads: %d", threadCount);
+        }
         optimize(zis);
     }
 }
